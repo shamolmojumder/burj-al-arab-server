@@ -49,9 +49,7 @@ client.connect(err => {
     const bearer = req.headers.authorization;
     if (bearer && bearer.startsWith('Bearer ')) {
       const idToken = bearer.split(' ')[1];
-      console.log({
-        idToken
-      });
+      // console.log({idToken});
       // idToken comes from the client app
       admin
         .auth()
@@ -59,9 +57,9 @@ client.connect(err => {
         .then((decodedToken) => {
           const tokenEmail = decodedToken.email;
           const queryEmail=req.query.email;
-          console.log(tokenEmail,queryEmail);
-          if (tokenEmail == req.query.email) {
-            bookings.find({email: req.query.email})
+          // console.log(tokenEmail,queryEmail);
+          if (tokenEmail == queryEmail) {
+            bookings.find({email: queryEmail})
               .toArray((err, documents) => {
                 res.send(documents)
               })
@@ -71,6 +69,8 @@ client.connect(err => {
         .catch((error) => {
           // Handle error
         });
+    }else{
+      res.status(401).send('unauthorized access')
     }
   })
 
