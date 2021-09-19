@@ -18,14 +18,8 @@ var serviceAccount = require("./configs/burj-al-arab-18486-firebase-adminsdk-saq
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://burj-al-arab-18486-default-rtdb.firebaseio.com"
+  databaseURL: process.env.FIRE_DB
 });
-
-
-
-const password = "8KfdD5J5HCkUM4D";
-
-
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -80,11 +74,5 @@ client.connect(err => {
 
 });
 
-
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World! from 5000')
-})
 
 app.listen(port)
